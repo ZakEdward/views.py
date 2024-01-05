@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}  
+  
+{% block title %}{{ post.title }}{% endblock %}  
+  
+{% block content %}  
+  <h1>{{ post.title }}</h1>  
+  <p class="date">  
+    Published {{ post.publish }} by {{ post.author }}  
+  </p>
+  {{ post.body|linebreaks }}
+  <h2>Похожие посты</h2>
+  {% for post in similar_posts %}
+    <p>
+      <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    </p>
+  {% empty %}
+    Похожих постов пока нет.
+  {% endfor %}
+  {% with  comment.count as total_comments %}
+    <h2>
+      {{ total_comments }} Коментарии {{ total_comments|pluralize }}
+    </h2>
+  {% endwith %}
+  {% for comment in comments %}
+    <div class="comment">
+      <p class="info">
+        Коментарий {{ forloop.counter }} от {{ comment.name }}
+        {{ comment.created }}
+      </p>
+      {{ comment.body|linebreaks }}
+    </div>
+  {% empty %}
+    <p>Комментариев пока нет.</p>
+  {% endfor %}
+  {% if new_comment %}
+    <h2>Ваш комментарий был добавлен.</h2>
+  {% else %}
+    <h2>Добавьте новый комментарий.</h2>
+    <form action="." method="post">
+      {{ comment_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Добавить коментарий"></p>
+    </form>
+  {% endif %}
+{% endblock %}
