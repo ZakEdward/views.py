@@ -183,14 +183,14 @@ ul.messages li a.close {
 }
 .social li a {
     width:100%;
-    height:100%;
-    display:block;
+    height:2%;
+    display:inline-block;
     color:#fff;
 }
 .social li.facebook { background:#3b5399; }
-.social li.twitter { background:#00cffa; }
 .social li.google { background:#de1710; }
-.social li.vkontakte { background: #19865C}
+.social li.vkontakte { background: #3dcbae}
+.social li.github { background: #f56005}
 
 /* images */
 

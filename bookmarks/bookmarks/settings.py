@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -85,9 +86,11 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_YANDEX_KEY = 'dded11dbda0c41458905507077daa34f'
 SOCIAL_AUTH_YANDEX_SECRET = '8b2db192fbf141f88fd3e29da8fd0a5d'
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = '51819938'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = '2hmy4nJpCyLrlRYZGhtZ'
+SOCIAL_AUTH_VK_OAUTH2_KEY = '51825499'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'CmMqXiHXGn3cbouQhNsd'
 
+SOCIAL_AUTH_GITHUB_KEY = 'bb9f7e27e3ed221143f0'
+SOCIAL_AUTH_GITHUB_SECRET = '313bfad2adb39569cb135486e704ca098217b383'
 
 
 WSGI_APPLICATION = 'bookmarks.wsgi.application'
@@ -130,12 +133,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]
+
+
+
 AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     # 'social_core.backends.facebook.FacebookBackend',
     'social_core.backends.vk.VKOAuth2',
+    'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

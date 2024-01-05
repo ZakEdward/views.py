@@ -6,6 +6,15 @@ from .models import Profile
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+#
+# class LoginForm(AuthenticationForm):
+#     username = forms.CharField()
+#     password = forms.CharField(widget=forms.PasswordInput)
+#
+#     class Meta:
+#         model = get_user_model()
+#         fields = ['username', 'password']
+#
 
 
 class UserRegistrationForm(forms.ModelForm):

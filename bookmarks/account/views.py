@@ -1,6 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, UserRegistrationForm, UserEditorForm, ProfileEditorForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
@@ -19,7 +19,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authenticated successfully')
+                    return render(request, 'account/dashboard.html')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -28,6 +28,9 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
+def logout_view(request):
+    logout(request)
+    return render(request, 'registration/logged_out.html')
 
 @login_required
 def dashboard(request):
