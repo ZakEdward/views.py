@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import mimetypes
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -25,14 +25,18 @@ SECRET_KEY = 'django-insecure-kta+fxfa(&#=k6b$hr2xn0bew57p773f+y#^^m6aohk@d46^8q
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+if DEBUG:
+    mimetypes.add_type('application/javascript', '.js', True)
+    mimetypes.add_type('text/css', '.css', True)
+    THUMBNAIL_DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
-
 
 # Application definition
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
+    'images',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'django_extensions',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +80,6 @@ TEMPLATES = [
 
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
-
-
 SOCIAL_AUTH_FACEBOOK_KEY = '3866653523610851'
 SOCIAL_AUTH_FACEBOOK_SECRET = '7a2d780b9ffba089c9f6651520aa9fa7'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
@@ -91,7 +94,6 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = 'CmMqXiHXGn3cbouQhNsd'
 
 SOCIAL_AUTH_GITHUB_KEY = 'bb9f7e27e3ed221143f0'
 SOCIAL_AUTH_GITHUB_SECRET = '313bfad2adb39569cb135486e704ca098217b383'
-
 
 WSGI_APPLICATION = 'bookmarks.wsgi.application'
 
@@ -113,7 +115,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -146,8 +147,6 @@ SOCIAL_AUTH_PIPELINE = [
     'social_core.pipeline.user.user_details',
 ]
 
-
-
 AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
     'social_core.backends.google.GoogleOAuth2',
@@ -168,7 +167,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
