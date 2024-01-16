@@ -4,7 +4,17 @@
 
 {% block content %}
   <h1>Информационная доска</h1>
-  <p>Добро пожаловать на вашу панель мониторинга. Ты можешь <a href="{% url 'edit' %}">отредактировать свой профиль</a>
-  или <a href="{% url 'password_change' %}">изменить свой пароль</a>.
+  {% with total_images_created=request.user.images_created.count %}
+    <p>Добро пожаловать на вашу панель мониторинга. Вы добавили в закладки
+      {{ total_images_created}} изображение{{ total_images_created|pluralize}}.
+    </p>
+  {% endwith %}
+  <p> Перетащите следующую кнопку на панель инструментов закладок,
+        чтобы добавить в закладки изображения с других веб-сайтов →
+          <a href="javascript:"{% include "bookmarklet_launcher.js" %}"
+class="button button2">Добавить в закладки</a>
+  </p>
+  <p> Вы также можете <a href="{% url 'edit' %}"> отредактировать свой профиль</a> или
+    <a href="{% url 'password_change' %}">или изменить пароль</a>
   </p>
 {% endblock %}

@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os.path
 from pathlib import Path
 import mimetypes
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
@@ -25,12 +26,20 @@ SECRET_KEY = 'django-insecure-kta+fxfa(&#=k6b$hr2xn0bew57p773f+y#^^m6aohk@d46^8q
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+THUMBNAIL_DEBUG = True
+
 if DEBUG:
     mimetypes.add_type('application/javascript', '.js', True)
     mimetypes.add_type('text/css', '.css', True)
-    THUMBNAIL_DEBUG = True
+
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+
+STATIC_URL = 'static/'
+
+MEDIA_ROOT = 'media/'
+MEDIA_URL = "media/"
 
 # Application definition
 
@@ -78,6 +87,10 @@ TEMPLATES = [
     },
 ]
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
+}
+
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 SOCIAL_AUTH_FACEBOOK_KEY = '3866653523610851'
@@ -103,8 +116,6 @@ LOGOUT_URL = 'logout'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -171,7 +182,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
