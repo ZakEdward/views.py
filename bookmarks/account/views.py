@@ -7,6 +7,8 @@ from .models import Profile, Contact
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
+from actions.utils import create_action
+from actions.models import Action
 
 def user_login(request):
     if request.method == 'POST':
@@ -35,7 +37,15 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    # По умолчанию показывать все действия
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list('id', flat=True)
+    if following_ids:
+        # Показывает только на кого подписан
+        actions = actions.filter(user_id__in=following_ids)
+    actions = actions.select_related('user', 'user__profile')[:10].prefetch_related('target')[:10]
+    # select_related - Один-ко-многим, prefetch_related - Многие-ко-многим !!! Всегда с аргументами
+    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 
 def edit(request):
@@ -64,6 +74,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             Profile.objects.create(user=new_user)
+            create_action(new_user, 'has created an account')
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
@@ -94,6 +105,7 @@ def user_follow(request):
             user = User.objects.get(id=user_id)
             if action == 'follow':
                 Contact.objects.get_or_create(user_form=request.user, user_to=user)
+                create_action(request.user, 'is following', user)
             else:
                 Contact.objects.filter(user_form=request.user, user_to=user).delete()
             return JsonResponse({'status': 'ok'})

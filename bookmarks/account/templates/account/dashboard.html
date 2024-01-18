@@ -17,4 +17,10 @@ class="button button2">Добавить в закладки</a>
   <p> Вы также можете <a href="{% url 'edit' %}"> отредактировать свой профиль</a> или
     <a href="{% url 'password_change' %}">или изменить пароль</a>
   </p>
+  <h2>Активность:</h2>
+  <div id="action-list">
+    {% for action in actions %}
+      {% include "actions/action/detail.html" %}
+    {% endfor %}
+  </div>
 {% endblock %}
