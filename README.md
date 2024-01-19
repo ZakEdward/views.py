@@ -11,7 +11,6 @@
 
 **Библиотеки и фреймворки**
 
-|--|--|--|--|--|
 <img title="Django" alt="Django" width="40px" src="https://raw.githubusercontent.com/github/explore/master/topics/django/django.png">
 
 **Databases**
@@ -19,7 +18,7 @@
 <img title="SQL" alt="SQL" width="40px" src="https://raw.githubusercontent.com/github/explore/master/topics/sql/sql.png">
 **Инструменты
 
-|<img title="git" alt="git" width="40px" src="https://raw.githubusercontent.com/github/explore/master/topics/git/git.png">
+<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a>
 <br>
 
 ## Давайте пообщаемся :handshake:
