@@ -22,9 +22,9 @@
     <span class="user">
       {% if request.user.is_authenticated %}
         Привет {{ request.user.first_name|default:request.user.username }},
-        <a href="{% url 'logout' %}">Выход</a>
+        <a href="{% url 'account:logout' %}">Выход</a>
       {% else %}
-        <a href="{% url 'login' %}">Вход</a>
+        <a href="{% url 'account:login' %}">Вход</a>
       {% endif %}
     </span>
   </div>
