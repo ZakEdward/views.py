@@ -119,7 +119,7 @@ SOCIAL_AUTH_GITHUB_SECRET = '313bfad2adb39569cb135486e704ca098217b383'
 
 WSGI_APPLICATION = 'bookmarks.wsgi.application'
 
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'account:dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
